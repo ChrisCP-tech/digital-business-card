@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Mail, Phone } from 'lucide-react'
+import { Mail, Phone, UserPlus } from 'lucide-react'
 import type { CardData } from '../types'
 import SocialLinks from './SocialLinks'
 import ThemeToggle from './ThemeToggle'
@@ -13,6 +13,33 @@ const AVATAR_SHAPE: Record<string, string> = {
   circle: 'rounded-full',
   rounded: 'rounded-2xl',
   square: 'rounded-none',
+}
+
+function downloadVCF(data: CardData) {
+  const nameParts = data.name.trim().split(' ')
+  const lastName = nameParts.length > 1 ? nameParts.pop()! : ''
+  const firstName = nameParts.join(' ')
+
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `FN:${data.name}`,
+    `N:${lastName};${firstName};;;`,
+    data.title ? `TITLE:${data.title}` : '',
+    data.email ? `EMAIL:${data.email}` : '',
+    data.phone ? `TEL:${data.phone}` : '',
+    data.photoUrl ? `PHOTO;VALUE=URI:${data.photoUrl}` : '',
+    ...data.socialLinks.map((l) => `URL;type=${l.platform.toUpperCase()}:${l.url}`),
+    'END:VCARD',
+  ].filter(Boolean).join('\r\n')
+
+  const blob = new Blob([lines], { type: 'text/vcard' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${data.name.replace(/\s+/g, '_')}.vcf`
+  a.click()
+  URL.revokeObjectURL(url)
 }
 
 export default function PublicCard({ data }: Props) {
@@ -96,7 +123,13 @@ export default function PublicCard({ data }: Props) {
         </div>
       </div>
 
-      <p className="mt-6 text-xs text-[--muted]">Scan to save contact</p>
+      <button
+        onClick={() => downloadVCF(data)}
+        className="mt-6 flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border border-[--border] bg-[--surface] text-[--fg] hover:bg-[--primary] hover:text-[--primary-fg] hover:border-[--primary] transition-all"
+      >
+        <UserPlus size={13} />
+        Save to Contacts
+      </button>
     </div>
   )
 }
