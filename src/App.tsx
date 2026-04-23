@@ -1,15 +1,27 @@
+import { useState, useEffect } from 'react'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import PublicCard from './components/PublicCard'
 import AdminApp from './components/admin/AdminApp'
-import cardData from './card-data.json'
 import type { CardData } from './types'
+import seedData from './card-data.json'
 
-const data = cardData as CardData
+function PublicCardLoader() {
+  const [data, setData] = useState<CardData>(seedData as CardData)
+
+  useEffect(() => {
+    fetch('./card-data.json?t=' + Date.now())
+      .then((r) => r.json())
+      .then((d) => setData(d))
+      .catch(() => {})
+  }, [])
+
+  return <PublicCard data={data} />
+}
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <PublicCard data={data} />,
+    element: <PublicCardLoader />,
   },
   {
     path: '/admin',
