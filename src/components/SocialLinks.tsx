@@ -1,18 +1,25 @@
-import { Globe, ExternalLink, AtSign, Hash, Mail, Link } from 'lucide-react'
+import { Globe, ExternalLink, Mail } from 'lucide-react'
+import { SiGithub, SiInstagram, SiTiktok, SiYoutube, SiFacebook, SiSnapchat, SiPinterest, SiReddit, SiDiscord, SiTwitch, SiX } from 'react-icons/si'
+import { FaLinkedin } from 'react-icons/fa'
 import type { SocialLink } from '../types'
 
 type IconComp = React.ComponentType<{ size?: number; className?: string }>
 
 const ICONS: Record<string, IconComp> = {
-  github: Hash,
-  linkedin: AtSign,
-  twitter: AtSign,
-  instagram: AtSign,
-  tiktok: AtSign,
-  youtube: Globe,
+  github: SiGithub,
+  linkedin: FaLinkedin,
+  twitter: SiX,
+  instagram: SiInstagram,
+  tiktok: SiTiktok,
+  youtube: SiYoutube,
+  facebook: SiFacebook,
+  snapchat: SiSnapchat,
+  pinterest: SiPinterest,
+  reddit: SiReddit,
+  discord: SiDiscord,
+  twitch: SiTwitch,
   website: Globe,
   email: Mail,
-  link: Link,
 }
 
 interface Props {

@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import type { SocialLink } from '../../types'
 
-const PLATFORMS = ['github', 'linkedin', 'twitter', 'instagram', 'youtube', 'tiktok', 'website']
+const PLATFORMS = ['github', 'linkedin', 'twitter', 'instagram', 'tiktok', 'youtube', 'facebook', 'snapchat', 'pinterest', 'reddit', 'discord', 'twitch', 'website', 'email']
 
 interface Props {
   links: SocialLink[]
