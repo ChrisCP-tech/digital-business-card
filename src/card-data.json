@@ -1,0 +1,17 @@
+{
+  "name": "Your Name",
+  "title": "Your Title",
+  "phone": "+1 (555) 000-0000",
+  "email": "you@example.com",
+  "bio": "A brief description about yourself.",
+  "photoUrl": "https://ui-avatars.com/api/?name=Your+Name&size=200&background=6366f1&color=fff",
+  "socialLinks": [
+    { "id": "1", "platform": "github", "url": "https://github.com/yourusername", "label": "@yourusername" },
+    { "id": "2", "platform": "linkedin", "url": "https://linkedin.com/in/yourusername", "label": "LinkedIn" }
+  ],
+  "design": {
+    "primaryColor": "#6366f1",
+    "fontFamily": "inter",
+    "avatarShape": "circle"
+  }
+}
