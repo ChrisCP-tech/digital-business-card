@@ -1,13 +1,23 @@
 {
-  "name": "Your Name",
-  "title": "Your Title",
-  "phone": "+1 (555) 000-0000",
-  "email": "you@example.com",
-  "bio": "A brief description about yourself.",
-  "photoUrl": "https://ui-avatars.com/api/?name=Your+Name&size=200&background=6366f1&color=fff",
+  "name": "Christopher Peng",
+  "title": "Computer Science & Game Design",
+  "phone": "+1 (626) 620-1821",
+  "email": "ccpengwork@gmail.com",
+  "bio": "",
+  "photoUrl": "https://media.licdn.com/dms/image/v2/D4D03AQEyC4LLn_JdFA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1676580460163?e=1778716800&v=beta&t=Iep37RDKcZequGvFqFp_ucJHf7AAjXIhRzxno6OQorc",
   "socialLinks": [
-    { "id": "1", "platform": "github", "url": "https://github.com/yourusername", "label": "@yourusername" },
-    { "id": "2", "platform": "linkedin", "url": "https://linkedin.com/in/yourusername", "label": "LinkedIn" }
+    {
+      "id": "1",
+      "platform": "github",
+      "url": "https://github.com/ChrisCP-tech",
+      "label": "ChrisCP-tech"
+    },
+    {
+      "id": "2",
+      "platform": "linkedin",
+      "url": "www.linkedin.com/in/christopher-peng-",
+      "label": "Christopher Peng"
+    }
   ],
   "design": {
     "primaryColor": "#6366f1",
