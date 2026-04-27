@@ -15,10 +15,39 @@ const AVATAR_SHAPE: Record<string, string> = {
   square: 'rounded-none',
 }
 
-function downloadVCF(data: CardData) {
+async function fetchImageAsBase64(url: string): Promise<{ base64: string; type: string } | null> {
+  try {
+    const res = await fetch(url)
+    const blob = await res.blob()
+    return await new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        const result = reader.result as string
+        const [header, base64] = result.split(',')
+        const type = header.match(/data:(.*?);/)?.[1] ?? 'image/jpeg'
+        resolve({ base64, type })
+      }
+      reader.onerror = () => resolve(null)
+      reader.readAsDataURL(blob)
+    })
+  } catch {
+    return null
+  }
+}
+
+async function downloadVCF(data: CardData) {
   const nameParts = data.name.trim().split(' ')
   const lastName = nameParts.length > 1 ? nameParts.pop()! : ''
   const firstName = nameParts.join(' ')
+
+  let photoLine = ''
+  if (data.photoUrl) {
+    const img = await fetchImageAsBase64(data.photoUrl)
+    if (img) {
+      const mimeType = img.type.split('/')[1]?.toUpperCase() ?? 'JPEG'
+      photoLine = `PHOTO;ENCODING=b;TYPE=${mimeType}:${img.base64}`
+    }
+  }
 
   const lines = [
     'BEGIN:VCARD',
@@ -28,7 +57,7 @@ function downloadVCF(data: CardData) {
     data.title ? `TITLE:${data.title}` : '',
     data.email ? `EMAIL:${data.email}` : '',
     data.phone ? `TEL:${data.phone}` : '',
-    data.photoUrl ? `PHOTO;VALUE=URI:${data.photoUrl}` : '',
+    photoLine,
     ...data.socialLinks.map((l) => `URL;type=${l.platform.toUpperCase()}:${l.url}`),
     'END:VCARD',
   ].filter(Boolean).join('\r\n')
@@ -124,7 +153,7 @@ export default function PublicCard({ data }: Props) {
       </div>
 
       <button
-        onClick={() => downloadVCF(data)}
+        onClick={() => { downloadVCF(data) }}
         className="mt-6 flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border border-[--border] bg-[--surface] text-[--fg] hover:bg-[--primary] hover:text-[--primary-fg] hover:border-[--primary] transition-all"
       >
         <UserPlus size={13} />
